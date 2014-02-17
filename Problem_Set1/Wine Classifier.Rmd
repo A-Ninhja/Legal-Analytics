@@ -1,8 +1,8 @@
 Brian C. Pike's Wine List Classifier
 ========================================================
 
-> wine = read.csv("http://www.nd.edu/~mclark19/learn/data/goodwine.csv")
-> summary(wine)
+wine = read.csv("http://www.nd.edu/~mclark19/learn/data/goodwine.csv")
+summary(wine)
  fixed.acidity    volatile.acidity  citric.acid     residual.sugar     chlorides       free.sulfur.dioxide total.sulfur.dioxide    density             pH          sulphates     
  Min.   : 3.800   Min.   :0.0800   Min.   :0.0000   Min.   : 0.600   Min.   :0.00900   Min.   :  1.00      Min.   :  6.0        Min.   :0.9871   Min.   :2.720   Min.   :0.2200  
  1st Qu.: 6.400   1st Qu.:0.2300   1st Qu.:0.2500   1st Qu.: 1.800   1st Qu.:0.03800   1st Qu.: 17.00      1st Qu.: 77.0        1st Qu.:0.9923   1st Qu.:3.110   1st Qu.:0.4300  
@@ -18,34 +18,30 @@ Brian C. Pike's Wine List Classifier
  3rd Qu.:11.30   3rd Qu.:6.000                3rd Qu.:1.0000              
  Max.   :14.90   Max.   :9.000                Max.   :1.0000          
 
-> library(corrplot)
-> corrplot(cor(wine[, -c(13, 15)]), method = "number", tl.cex = 0.5)
-> 
-> library(caret)
-> set.seed(1234) #so that the indices will be the same when re-run
-> trainIndices = createDataPartition(wine$good, p = 0.8, list = F)
-> wanted = !colnames(wine) %in% c("free.sulfur.dioxide", "density", "quality",
+library(corrplot)
+corrplot(cor(wine[, -c(13, 15)]), method = "number", tl.cex = 0.5)
+ 
+library(caret)
+set.seed(1234) #so that the indices will be the same when re-run
+trainIndices = createDataPartition(wine$good, p = 0.8, list = F)
+wanted = !colnames(wine) %in% c("free.sulfur.dioxide", "density", "quality",
 +                                 "color", "white")
-> wine_train = wine[trainIndices, wanted] #remove quality and color, as well as density and others
-> wine_test = wine[-trainIndices, wanted]
-> 
-> wine_trainplot = predict(preProcess(wine_train[,-10], method="range"),
+wine_train = wine[trainIndices, wanted] #remove quality and color, as well as density and others
+wine_test = wine[-trainIndices, wanted]
+
+wine_trainplot = predict(preProcess(wine_train[,-10], method="range"),
 +                          wine_train[,-10])
-> featurePlot(wine_trainplot, wine_train$good, "box")
+featurePlot(wine_trainplot, wine_train$good, "box")
 
-
-> library("e1071")
-Loading required package: class
-> set.seed(1234)
-> cv_opts = trainControl(method="cv", number=10)
-> knn_opts = data.frame(.k=c(seq(3, 11, 2), 25, 51, 101)) #odd to avoid ties
-> results_knn = train(good~., data=wine_train, method="knn",
+library("e1071")
+set.seed(1234)
+cv_opts = trainControl(method="cv", number=10)
+knn_opts = data.frame(.k=c(seq(3, 11, 2), 25, 51, 101)) #odd to avoid ties
+results_knn = train(good~., data=wine_train, method="knn",
 +                     preProcess="range", trControl=cv_opts,
-+                     tuneGrid = knn_opts)
-> 
++                     tuneGrid = knn_opts) 
 
-
-> results_knn
+results_knn
 k-Nearest Neighbors 
 
 5199 samples
@@ -73,8 +69,8 @@ Accuracy was used to select the optimal model using  the largest value.
 The final value used for the model was k = 3. 
 
 
-> preds_knn = predict(results_knn, wine_test[,-10])
-> confusionMatrix(preds_knn, wine_test[,10], positive='Good')
+preds_knn = predict(results_knn, wine_test[,-10])
+confusionMatrix(preds_knn, wine_test[,10], positive='Good')
 Confusion Matrix and Statistics
 
           Reference
@@ -100,5 +96,3 @@ Prediction Bad Good
       Balanced Accuracy : 0.6954          
                                           
        'Positive' Class : Good            
-                                          
-> 
