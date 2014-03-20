@@ -1,6 +1,7 @@
 Predicting Trees
 =========================================================================================
-Brian C. Pike 2014 via Jeef Leek
+Brian C. Pike 2014 
+via Jeef Leek
 Video Available @ https://www.youtube.com/watch?v=kdUVUINpFmI
 
 =========================================================================================
@@ -17,6 +18,8 @@ names(iris)
 ```
 
 
+
+
 ```r
 table(iris$Species)
 ```
@@ -28,8 +31,6 @@ table(iris$Species)
 ```
 
 
-setosa versicolor  virginica 
-        50         50         50 
 
 
 ```r
@@ -58,13 +59,7 @@ summary(tree1)
 ## Misclassification error rate: 0.0333 = 5 / 150
 ```
 
-
-Classification tree:
-tree(formula = Species ~ Sepal.Width + Petal.Width, data = iris)
-Number of terminal nodes:  5 
-Residual mean deviance:  0.204 = 29.57 / 145 
-Misclassification error rate: 0.03333 = 5 / 150 
-
+ 
 
 ```r
 plot(tree1)
@@ -118,28 +113,6 @@ pred1
 ## 20      0    1.00000   0.00000
 ```
 
-
-setosa versicolor virginica
-1       0 0.02173913 0.9782609
-2       0 0.02173913 0.9782609
-3       1 0.00000000 0.0000000
-4       0 1.00000000 0.0000000
-5       0 0.02173913 0.9782609
-6       0 0.02173913 0.9782609
-7       0 0.02173913 0.9782609
-8       0 0.90476190 0.0952381
-9       0 1.00000000 0.0000000
-10      0 0.02173913 0.9782609
-11      0 1.00000000 0.0000000
-12      1 0.00000000 0.0000000
-13      1 0.00000000 0.0000000
-14      1 0.00000000 0.0000000
-15      0 0.02173913 0.9782609
-16      0 0.02173913 0.9782609
-17      0 1.00000000 0.0000000
-18      1 0.00000000 0.0000000
-19      0 1.00000000 0.0000000
-20      0 1.00000000 0.0000000
 
 
 ```r
@@ -202,63 +175,6 @@ head(Cars93)
 ## 6           16   2880     USA Buick Century
 ```
 
-
-Manufacturer   Model    Type Min.Price
-1        Acura Integra   Small      12.9
-2        Acura  Legend Midsize      29.2
-3         Audi      90 Compact      25.9
-4         Audi     100 Midsize      30.8
-5          BMW    535i Midsize      23.7
-6        Buick Century Midsize      14.2
-  Price Max.Price MPG.city MPG.highway
-1  15.9      18.8       25          31
-2  33.9      38.7       18          25
-3  29.1      32.3       20          26
-4  37.7      44.6       19          26
-5  30.0      36.2       22          30
-6  15.7      17.3       22          31
-             AirBags DriveTrain Cylinders
-1               None      Front         4
-2 Driver & Passenger      Front         6
-3        Driver only      Front         6
-4 Driver & Passenger      Front         6
-5        Driver only       Rear         4
-6        Driver only      Front         4
-  EngineSize Horsepower  RPM Rev.per.mile
-1        1.8        140 6300         2890
-2        3.2        200 5500         2335
-3        2.8        172 5500         2280
-4        2.8        172 5500         2535
-5        3.5        208 5700         2545
-6        2.2        110 5200         2565
-  Man.trans.avail Fuel.tank.capacity
-1             Yes               13.2
-2             Yes               18.0
-3             Yes               16.9
-4             Yes               21.1
-5             Yes               21.1
-6              No               16.4
-  Passengers Length Wheelbase Width
-1          5    177       102    68
-2          5    195       115    71
-3          5    180       102    67
-4          6    193       106    70
-5          4    186       109    69
-6          6    189       105    69
-  Turn.circle Rear.seat.room Luggage.room
-1          37           26.5           11
-2          38           30.0           15
-3          37           28.0           14
-4          37           31.0           17
-5          39           27.0           13
-6          41           28.0           16
-  Weight  Origin          Make
-1   2705 non-USA Acura Integra
-2   3560 non-USA  Acura Legend
-3   3375 non-USA       Audi 90
-4   3405 non-USA      Audi 100
-5   3640 non-USA      BMW 535i
-6   2880     USA Buick Century
 
 
 ```r
@@ -328,11 +244,6 @@ table(Cars93$DriveTrain, predict(pruneTree, type = "class"))
 ```
 
 
- 4WD Front Rear
-  4WD     5     5    0
-  Front   1    66    0
-  Rear    1    10    5
-
 
 ```r
 table(Cars93$DriveTrain, predict(treeCars, type = "class"))
@@ -346,9 +257,3 @@ table(Cars93$DriveTrain, predict(treeCars, type = "class"))
 ##   Rear    0     3   13
 ```
 
-
-        4WD Front Rear
-  4WD     5     5    0
-  Front   2    61    4
-  Rear    0     3   13
-  
